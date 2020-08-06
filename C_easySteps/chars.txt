@@ -1,0 +1,1 @@
+text, one character at a time.
