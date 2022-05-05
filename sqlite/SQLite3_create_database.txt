@@ -22,3 +22,10 @@ sqlite> select * from test;
 sqlite> .quit
 
 C:\Users\me\Documents\Examples_R\sqlite>
+
+-- how to create a database from a file.sql
+C:\Users\me\Documents\Examples_R\sqlite>sqlite3 create_student_grades_database.sql
+C:\Users\me\Documents\Examples_R\sqlite>sqlite3
+sqlite> .open studentsDB.db
+sqlite> .tables
+Grades    Students
