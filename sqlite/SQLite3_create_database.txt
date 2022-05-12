@@ -29,3 +29,34 @@ C:\Users\me\Documents\Examples_R\sqlite>sqlite3
 sqlite> .open studentsDB.db
 sqlite> .tables
 Grades    Students
+
+-- how to create a database and run sql to populate table(s)
+-- https://www.tutorialspoint.com/sqlite/sqlite_create_database.htm
+-- https://runestone.academy/ns/books/published/MasteringDatabases/02OneEntityShapes/OneEntityShapes.html#creature-data-instances?mode=browsing
+-- first create a database in foler 'sqlite'
+sqlite>sqlite3 creatureDB.db
+
+-- folder sqlite
+sqlite>sqlite3 creatureDB.db < create_table_creature.sql
+
+-- you can do simple queries, such as
+sqlite> sqlite3
+sqlite> select creatureId, creatureName from creature;
+
+-- create another table town
+sqlite>sqlite3 creatureDB.db < create_town_table.sql
+sqlite>sqlite3
+sqlite> .open creatureDB.db
+sqlite> .tables
+-- creature  town
+sqlite> .quit
+
+-- re-create table 'creature' with new columns, PK, FK
+sqlite>sqlite3 creatureDB.db < re_create_table_creature.sql
+-- add another entry
+sqlite> insert into creature values (10, 'Iron man', 'superhero', 'z');
+sqlite> select * from creature
+
+-- natural join
+sqlite> select creatureName, townName
+   ...> from creature natural join town;
