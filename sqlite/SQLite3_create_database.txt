@@ -23,13 +23,6 @@ sqlite> .quit
 
 C:\Users\me\Documents\Examples_R\sqlite>
 
--- how to create a database from a file.sql
-C:\Users\me\Documents\Examples_R\sqlite>sqlite3 create_student_grades_database.sql
-C:\Users\me\Documents\Examples_R\sqlite>sqlite3
-sqlite> .open studentsDB.db
-sqlite> .tables
-Grades    Students
-
 -- how to create a database and run sql to populate table(s)
 -- https://www.tutorialspoint.com/sqlite/sqlite_create_database.htm
 -- https://runestone.academy/ns/books/published/MasteringDatabases/02OneEntityShapes/OneEntityShapes.html#creature-data-instances?mode=browsing
@@ -60,3 +53,10 @@ sqlite> select * from creature
 -- natural join
 sqlite> select creatureName, townName
    ...> from creature natural join town;
+
+
+
+
+
+
+
