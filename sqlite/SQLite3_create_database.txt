@@ -54,9 +54,33 @@ sqlite> select * from creature
 sqlite> select creatureName, townName
    ...> from creature natural join town;
 
+-- One-One to-be relationship Shape
+-- SQLite folder
+SQLite>sqlite3 skillsDB.db
+SQLite>sqlite3 skillsDB.db < skills.sql
 
+--  many-many relationship 
+https://runestone.academy/ns/books/published/MasteringDatabases/04ThreeEntityShapes/IntersectionShape.html?mode=browsing
+SQLite>sqlite3 skillsDB.db < create_achieve_skill_creature.sql
 
+SQLite>sqlite3
+sqlite> .open skillsDB.db
+sqlite> .tables
+achievement  creature     skill        teamSkill
 
+sqlite> select * from creature natural join achievement natural join skill;
+1|Bannon|person|Philly|A|1|float
+1|Bannon|person|Philly|E|3|swim
+5|Mieska|person|Duluth|Z|3|gargle
+3|Neff|person|Blue Earth|Z|1|gargle
 
+sqlite> select * from creature;
+1|Bannon|person|Philly
+3|Neff|person|Blue Earth
+5|Mieska|person|Duluth
 
-
+sqlite> select * from achievement;
+1|A|1
+1|E|3
+5|Z|3
+3|Z|1
