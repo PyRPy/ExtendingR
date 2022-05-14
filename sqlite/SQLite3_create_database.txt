@@ -84,3 +84,16 @@ sqlite> select * from achievement;
 1|E|3
 5|Z|3
 3|Z|1
+
+-- create another foler 'arbitraryCase'
+SQLite\arbitraryCase>sqlite3 skillsDB.db
+SQLite\arbitraryCase>sqlite3 skillsDB.db < create_achieve_arbitrary_skill_creature.sql
+SQLite\arbitraryCase>sqlite3
+sqlite> .open skillsDB.db
+sqlite> .tables
+achievement  creature     skill
+sqlite> select * from creature natural join achievement natural join skill;
+1|Bannon|person|Philly|1|A|1|2022-05-14 14:38:30|float
+1|Bannon|person|Philly|2|E|3|2019-09-15 15:35:00|swim
+5|Mieska|person|Duluth|3|Z|3|2019-09-15 15:42:30|gargle
+3|Neff|person|Blue Earth|4|Z|1|2022-05-14 09:38:30|gargle
