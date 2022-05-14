@@ -1,0 +1,157 @@
+C:\Users\me\OneDrive\Desktop\RStudio\SQLite\smallDB>sqlite3 smallDB.db < creatureDB.sql
+
+C:\Users\me\OneDrive\Desktop\RStudio\SQLite\smallDB>sqlite3
+SQLite version 3.38.5 2022-05-06 15:25:27
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .open smallDB.db
+sqlite> .tables
+achievement          contribution         skill
+aspiration           creature             teamSkill
+aspiredContribution  role                 town
+
+sqlite> select * from creature where creatureType = 'person';
+1|Bannon|person|p|10
+2|Myers|person|a|9
+3|Neff|person|be|
+4|Neff|person|b|3
+5|Mieska|person|d|10
+6|Carlis|person|p|9
+11|David Beckham|person|le|9
+12|Harry Kane|person|le|11
+13|Megan Rapinoe|person|sw|10
+sqlite> select * from creature where creatureType != 'person';
+7|Kermit|frog|g|8
+8|Godzilla|monster|t|6
+9|Thor|superhero|as|
+10|Elastigirl|superhero|mv|13
+sqlite> select * from creature where creatureType = 'person' and reside_townID = 'le';
+11|David Beckham|person|le|9
+12|Harry Kane|person|le|11
+sqlite> select * from achievement where proficiency > 3 and date(achDate) < date('2018-08-01');
+5|5|Z|6|2016-04-12 15:42:30|t
+6|3|Z|4|2018-07-15 00:00:00|be
+7|3|Z|4|2018-07-15 00:00:00|be
+8|3|Z|4|2018-07-15 00:00:00|be
+10|11|PK|10|1998-08-15 00:00:00|le
+11|12|PK|10|2016-05-24 00:00:00|le
+12|13|PK|10|2012-08-06 00:00:00|le
+16|7|B2|19|2017-01-10 16:30:00|d
+17|9|B2|19|2017-01-10 16:30:00|d
+18|4|TR4|85|2012-07-30 00:00:00|le
+19|5|TR4|85|2012-07-30 00:00:00|le
+20|2|TR4|85|2012-07-30 00:00:00|le
+21|1|TR4|85|2012-07-30 00:00:00|le
+sqlite> select creatID, creatureName from creature;
+Parse error: no such column: creatID
+  select creatID, creatureName from creature;
+         ^--- error here
+sqlite> select creatureId, creatureName from creature;
+1|Bannon
+2|Myers
+3|Neff
+4|Neff
+5|Mieska
+6|Carlis
+7|Kermit
+8|Godzilla
+9|Thor
+10|Elastigirl
+11|David Beckham
+12|Harry Kane
+13|Megan Rapinoe
+sqlite> select achId, skillCode, proficiency, juliaday('now') - juliaday(achDate) as totalElapsedTimeSinceAchieved
+   ...> from achievement;
+Parse error: no such function: juliaday
+   achId, skillCode, proficiency, juliaday('now') - juliaday(achDate) as totalEl
+                                      error here ---^
+sqlite> select achId, skillCode, proficiency, julianday('now') - julianday(achDate) as totalElapsedTimeSinceAchieved
+   ...> from achievement;
+1|A|3|0.00932491896674037
+2|E|3|1702.25807491923
+3|A|3|1400.32404714124
+4|E|3|0.00932491896674037
+5|Z|6|2223.25286658574
+6|Z|4|1399.90738047473
+7|Z|4|1399.90738047473
+8|Z|4|1399.90738047473
+9|Z|3|1434.90738047473
+10|PK|10|8673.90738047473
+11|PK|10|2181.90738047473
+12|PK|10|3568.90738047473
+13|PK|1|
+14|THR|10|1371.30321380822
+15|THR|10|1371.30321380822
+16|B2|19|1950.21988047473
+17|B2|19|1950.21988047473
+18|TR4|85|3575.90738047473
+19|TR4|85|3575.90738047473
+20|TR4|85|3575.90738047473
+21|TR4|85|3575.90738047473
+22|D3|8|0.217658252455294
+23|D3|8|0.217658252455294
+24|D3|8|0.217658252455294
+
+-- reduce, be careful
+sqlite> select distinct creatureType from creature;
+person
+frog
+monster
+superhero
+sqlite> select distinct State, Country from town;
+PA|United States
+MN|United States
+MS|United States
+Kanto|Japan
+|
+England|United Kingdom
+Washington|United States
+
+-- group by
+sqlite> select creatureId, count(distinct skillCode) as achievedSkillCount from achievement
+   ...> group by creatureId;
+1|3
+2|1
+3|1
+4|2
+5|2
+7|2
+8|1
+9|3
+10|1
+11|1
+12|1
+13|2
+
+sqlite> select creatureId, skillCode, count(*) as numberOfTimesSkillAchieved
+   ...> from achievement
+   ...> group by creatureId, skillCode;
+1|A|2
+1|E|2
+1|TR4|1
+2|TR4|1
+3|Z|3
+4|TR4|1
+4|Z|1
+5|TR4|1
+5|Z|1
+7|B2|1
+7|D3|1
+8|PK|1
+9|B2|1
+9|D3|1
+9|THR|1
+10|THR|1
+11|PK|1
+12|PK|1
+13|D3|1
+13|PK|1
+
+sqlite> select max(proficiency) as maxProficiency
+   ...> from achievement;
+85
+
+-- bad cases for group by
+
+
