@@ -76,4 +76,34 @@ SELECT S.*, TS.teamSize
 FROM skill S, teamSkill TS
 WHERE S.skillCode = TS.skillCode;
 
+-- What creatures have achieved and aspired to the same Skill?
+DROP TABLE IF EXISTS achievingCreatureSkillPair;
 
+-- 13.10
+-- achieving Creature-Skill Pair
+CREATE TABLE achievingCreatureSkillPair AS
+SELECT distinct creatureId, skillCode
+FROM Achievement
+;
+
+SELECT A.*, B.aspiredProficiency,
+            B.desired_townId
+FROM achievingCreatureSkillPair A, Aspiration B
+WHERE A.creatureId = B.creatureId
+AND   A. skillCode = B.skillCode
+;
+
+-- 13.11 
+-- Find each creature with its idol creature data
+SELECT c1.creatureId as c1_creatureId,
+	   c1.creatureName as c1_creatureName,
+	   C1.creatureType AS C1_creatureType,
+        C1.reside_townId AS C1_reside_townId,
+        C1.idol_creatureId AS C1_idol_creatureId,
+        C2.creatureName AS idol_creatureName,
+        C2.creatureType AS idol_creatureType,
+        C2.reside_townId AS idol_reside_townId,
+        C2.idol_creatureId AS idol_idol_creatureId
+	   
+from creature c1, creature c2
+WHERE c1.idol_creatureId  = c2.creatureId ;
