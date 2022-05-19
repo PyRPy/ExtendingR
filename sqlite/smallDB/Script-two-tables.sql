@@ -107,3 +107,39 @@ SELECT c1.creatureId as c1_creatureId,
 	   
 from creature c1, creature c2
 WHERE c1.idol_creatureId  = c2.creatureId ;
+
+-- Find each ordered pair of creatures that reside in the same town
+-- 13.12
+SELECT C1.creatureId as C1_creatureId,
+	   C1.creatureName as C1_creatureName,
+	   C1.creatureType AS C1_creatureType,
+       C1.reside_townId AS C1_reside_townId, -- different than c2
+       C1.idol_creatureId AS C1_idol_creatureId,
+       C2.creatureId AS C2_creatureId,
+       C2.creatureName AS C2_creatureName,
+       C2.creatureType AS C2_creatureType,
+       C2.idol_creatureId AS C2_idol_creatureId	   
+FROM creature C1, creature C2
+WHERE C1.reside_townId = C2.reside_townId ;
+
+-- Outer join
+-- check what's in the table or tables
+SELECT * 
+FROM creature;
+
+SELECT distinct(creatureId)
+FROM achievement;
+
+-- 14.1 outer join 
+drop table if exists CreatureNJAchievement;
+
+CREATE table CreatureNJAchievement as 
+select c.*, a.proficiency , a.skillCode , a.achDate 
+from creature c 
+inner join achievement a 
+on c.creatureId = a.creatureId ;
+
+SELECT * FROM CreatureNJAchievement
+order by creatureId;
+
+-- the question you ask is: where is Carlis in Id = 6 ?
