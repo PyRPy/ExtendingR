@@ -143,3 +143,24 @@ SELECT * FROM CreatureNJAchievement
 order by creatureId;
 
 -- the question you ask is: where is Carlis in Id = 6 ?
+
+-- Find each Creature with its possibly null Achievement data.
+DROP TABLE if exists CreatureLOJAchievement;
+CREATE table CreatureLOJAchievement as 
+select c.*, a.proficiency , a.skillCode , a.achDate 
+from creature c 
+left outer join achievement a 
+on c.creatureId  = a.creatureId ;
+
+SELECT * FROM CreatureLOJAchievement
+order by creatureId;
+
+SELECT creatureId, COUNT(skillCode)
+from CreatureLOJAchievement 
+group by creatureId;
+
+SELECT creatureId, count(DISTINCT skillCode)
+from CreatureLOJAchievement 
+group by creatureId;
+-- this time Carlis is kept in the table above when counting skills
+ 
