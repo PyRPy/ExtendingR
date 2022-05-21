@@ -163,4 +163,35 @@ SELECT creatureId, count(DISTINCT skillCode)
 from CreatureLOJAchievement 
 group by creatureId;
 -- this time Carlis is kept in the table above when counting skills
+
+-- Find each same creatureId and same reside_townId as test_townId Creature with its possibly null Achievement data.
+-- another condition added
+DROP TABLE if exists CreatureLOJAchievement_w;
+CREATE table CreatureLOJAchievement_w as 
+select c.*, a.proficiency , a.skillCode , a.achDate 
+from creature c 
+left outer join achievement a 
+on (c.creatureId = a.creatureId and c.reside_townId=a.test_townId)
+;
+SELECT *
+FROM CreatureLOJAchievement_w
+order by creatureId;
+
+-- How many skills have been achieved by a creature in the same achievement test town as the reside town of the creature?
+SELECT creatureId, reside_townId, COUNT(skillCode) as skillcount
+from CreatureLOJAchievement_w
+group by creatureId, reside_townId;
+
+-- 14.1.3. Right Outer Join
+-- no right join in SQLite
+select c.creatureId, a.achId , a.skillCode , a.proficiency , a.test_townId 
+FROM creature c left join achievement a 
+on c.creatureId =a.creatureId 
+UNION ALL 
+SELECT a.creatureId,
+		a.achId, b.skillCode, a.proficiency , a.test_townId 
+from skill b left join achievement a 
+on a.skillCode = b.skillCode 
+;
+
  
