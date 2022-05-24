@@ -194,4 +194,74 @@ from skill b left join achievement a
 on a.skillCode = b.skillCode 
 ;
 
- 
+-- 15.1.1. Divide, originally: “matches at least”
+-- Find each Creature who is a survivor because they can at least float and swim
+drop TABLE if exists skillCode_of_survivor_Skill;
+CREATE table skillCode_of_survivor_skill as 
+select skillCode from skill 
+where skillDescription = 'float' or skillDescription = 'swim'
+;
+
+-- divide operation and two nested queries 
+SELECT DISTINCT creatureId
+from achievement as IN1
+where not EXISTS 
+	(SELECT *
+		from skillCode_of_survivor_Skill p
+		where not exists 
+			(SELECT * 
+				from achievement as IN2
+					where (IN1.creatureId = IN2.creatureId)
+						and (IN2.skillCode = p.skillCode)));
+	
+-- First create the PATTERN relation (B) of survivor skill
+drop table if exists skillCode_of_survivor_Skill;
+
+CREATE TABLE skillCode_of_survivor_Skill AS
+SELECT skillCode from skill
+WHERE skillDescription = 'float' OR skillDescription = 'swim'
+;
+
+DROP table if exists crId_s_code_of_Achievement;
+
+CREATE table crId_s_code_of_Achievement as 
+select DISTINCT creatureId, skillCode 
+from achievement
+;
+
+/*
+Find each creature who has achieved at least the skill whose description is ‘three-legged race’.
+Find each creature who has achieved exactly the skill whose description is ‘three-legged race’.
+ */
+
+DROP table if exists threeLegRaceSkill;
+CREATE table threeLegRaceSkill as 
+select skillCode from skill 
+where skillCode = 'THR'
+;
+
+SELECT *
+FROM threeLegRaceSkill;
+
+select DISTINCT creatureId 
+from achievement as IN1 
+WHERE not EXISTS 
+	(select *
+	  from threeLegRaceSkill 
+	  where not exists 
+	  ( select * 
+	    from achievement as IN2 
+	    WHERE (IN1.creatureId = IN2.creatureId) and (IN2.skillCode = threeLegRaceSkill.skillCode)));
+
+ -- And next the ‘exactly’ three-legged race, no more no less
+SELECT IN1.creatureId 
+  from achievement as IN1 
+  	left outer join 
+  	threeLegRaceSkill as p1 
+  	on IN1.skillCode = p1.skillCode 
+  	group by IN1.creatureId 
+  	HAVING count(IN1.skillCode) = 
+  		(SELECT COUNT(skillCode) from threeLegRaceSkill)
+  	and COUNT(p1.skillCode) =
+  		(SELECT COUNT(skillCode) from threeLegRaceSkill);
+	   
