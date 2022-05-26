@@ -264,4 +264,27 @@ SELECT IN1.creatureId
   		(SELECT COUNT(skillCode) from threeLegRaceSkill)
   	and COUNT(p1.skillCode) =
   		(SELECT COUNT(skillCode) from threeLegRaceSkill);
-	   
+  	
+ -- 16.1. A Variation: Compare Join
+ -- Find each unordered pair of creatures who reside in the same town
+ select c1.creatureId c1_creatureId,
+        c1.creatureName c1_creatureName,
+        C1.reside_townId C1_reside_townId,
+        C2.creatureId C2_creatureId,
+        C2.creatureName C2_creatureName,
+        C2.reside_townId C2_reside_townId        
+ from creature c1, creature c2
+ WHERE c1_reside_townId = c2_reside_townId
+ AND c1_creatureId < c2_creatureId
+ ;
+
+-- Find each creature who aspires to contribute and
+-- contributed the same skillCode to a team where
+-- their contributed roleName is not the same as their aspired roleName
+
+SELECT c.*, a.skillCode aspContrib_skillCode, a.roleName  aspContrib_roleName
+from contribution c, aspiredContribution a
+WHERE c.creatureId = a.creatureId 
+and c.skillCode = a.skillCode 
+and c.roleName != a.roleName 
+;
