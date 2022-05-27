@@ -288,3 +288,46 @@ WHERE c.creatureId = a.creatureId
 and c.skillCode = a.skillCode 
 and c.roleName != a.roleName 
 ;
+
+-- 17.1. Category Relations
+-- Find each creature who is a fair swimmer
+DROP table if exists swim_catetory;
+CREATE table swim_category (
+skillCode varchar(3) not null,
+category  varchar(20) not null,
+lowProfVal integer   not null,
+highProfVal integer not null
+);
+
+INSERT into swim_category values ('E', 'poor', 0, 1);
+INSERT into swim_category values ('E', 'fair', 2, 3);
+INSERT into swim_category values ('E', 'good', 4, 5);
+
+SELECT DISTINCT achievement.creatureId, swim_category.category
+from achievement, swim_category 
+WHERE achievement.skillCode = swim_category.skillCode 
+AND achievement.proficiency >= swim_category.lowProfVal 
+AND achievement.proficiency <= swim_category.highProfval
+;
+
+DROP TABLE IF EXISTS gargling_category;
+
+CREATE TABLE gargling_category (
+skillCode          VARCHAR(3)      NOT NULL,
+category           VARCHAR(20)     NOT NULL,
+lowProfVal         INTEGER         NOT NULL,
+highProfVal        INTEGER         NOT NULL
+);
+
+INSERT INTO gargling_category VALUES ('Z', 'poor', 0, 1);
+INSERT INTO gargling_category VALUES ('Z', 'fair', 2, 3);
+INSERT INTO gargling_category VALUES ('Z', 'good', 4, 5);
+
+SELECT distinct achievement.creatureId, gargling_category.category,
+				achievement.achDate 
+FROM achievement, gargling_category
+WHERE achievement.skillCode = gargling_category.skillCode
+AND   achievement.proficiency >= gargling_category.lowProfVal
+AND   achievement.proficiency <= gargling_category.highProfVal
+AND  gargling_category.category = 'good'
+;
