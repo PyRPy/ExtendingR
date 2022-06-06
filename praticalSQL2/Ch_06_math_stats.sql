@@ -74,11 +74,3 @@ from us_counties_pop_est_2019;
 select mode() 
 	within group (order by births_2019)
 from us_counties_pop_est_2019;
-
-
-
-
-
-
-
-
