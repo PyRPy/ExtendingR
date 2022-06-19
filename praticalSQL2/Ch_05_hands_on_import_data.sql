@@ -92,6 +92,3 @@ limit 5;
 select *
 from spy_tbl
 where date1 between '2021-01-01' and '2022-06-03';
-
-
-
