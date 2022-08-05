@@ -23,3 +23,9 @@ from person as p left join address as a on p.personId = a.personId;
 SELECT a.name as Employee
 FROM Employee as a
 WHERE a.salary > (SELECT b.salary FROM Employee as b WHERE a.managerId = b.id);
+
+
+-- # Write your MySQL query statement below
+-- 182. Duplicate Emails
+SELECT distinct p.email as Email
+FROM Person as p join Person as b on (p.email = b.email and p.id != b.id);
