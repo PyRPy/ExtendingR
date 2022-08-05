@@ -29,3 +29,9 @@ WHERE a.salary > (SELECT b.salary FROM Employee as b WHERE a.managerId = b.id);
 -- 182. Duplicate Emails
 SELECT distinct p.email as Email
 FROM Person as p join Person as b on (p.email = b.email and p.id != b.id);
+
+-- 183. Customers Who Never Order
+-- # Write your MySQL query statement below
+SELECT c.name as Customers
+from Customers as c left join Orders as o on c.id = o.customerId
+where o.id is null;
