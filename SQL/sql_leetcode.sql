@@ -35,3 +35,10 @@ FROM Person as p join Person as b on (p.email = b.email and p.id != b.id);
 SELECT c.name as Customers
 from Customers as c left join Orders as o on c.id = o.customerId
 where o.id is null;
+
+-- 196. Delete Duplicate Emails
+-- # Please write a DELETE statement and DO NOT write a SELECT statement.
+-- # Write your MySQL query statement below
+DELETE p from Person as p, Person as b
+where p.email = b.email and p.id > b.id;
+
