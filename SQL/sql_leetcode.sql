@@ -42,3 +42,8 @@ where o.id is null;
 DELETE p from Person as p, Person as b
 where p.email = b.email and p.id > b.id;
 
+-- 197. Rising Temperature
+-- # Write your MySQL query statement below
+select w.id
+from Weather as w, Weather as b
+where w.temperature > b.temperature and datediff(w.recordDate, b.recordDate) = 1;
