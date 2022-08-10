@@ -79,3 +79,10 @@ select class
 from Courses
 group by class
 having count(student) >= 5;
+
+607. Sales Person
+# Write your MySQL query statement below
+select s.name
+from SalesPerson as s
+where s.sales_id not in  (select o.sales_id from Orders as o where o.com_id in
+(select c.com_id from Company as c where c.name = "RED"));
