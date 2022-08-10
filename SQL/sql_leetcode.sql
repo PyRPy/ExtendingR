@@ -86,3 +86,15 @@ select s.name
 from SalesPerson as s
 where s.sales_id not in  (select o.sales_id from Orders as o where o.com_id in
 (select c.com_id from Company as c where c.name = "RED"));
+
+620. Not Boring Movies
+# Write your MySQL query statement below
+select id, movie, description, rating
+from Cinema 
+where (id % 2 = 1) and (description <> "boring") 
+order by rating desc;
+
+627. Swap Salary
+# Write your MySQL query statement below
+update Salary
+set sex = case when sex = "m" then "f" when sex = "f" then "m" end;
