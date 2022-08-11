@@ -105,3 +105,17 @@ select actor_id, director_id
 from ActorDirector
 group by actor_id, director_id
 having count(timestamp) >= 3;
+
+1084. Sales Analysis III
+-- group by having, with function max() and min()
+# Write your MySQL query statement below
+select distinct p.product_id, p.product_name
+from Product as p
+where p.product_id not in (select s.product_id from Sales as s where (s.sale_date > '2019-03-31') or (s.sale_date < '2019-01-01'));
+
+# Write your MySQL query statement below
+select distinct p.product_id, p.product_name
+from Product as p
+left join Sales as s on p.product_id = s.product_id
+group by s.product_id
+having max(s.sale_date) <= '2019-03-31' and min(s.sale_date) >= '2019-01-01';
