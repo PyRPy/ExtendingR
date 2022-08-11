@@ -119,3 +119,10 @@ from Product as p
 left join Sales as s on p.product_id = s.product_id
 group by s.product_id
 having max(s.sale_date) <= '2019-03-31' and min(s.sale_date) >= '2019-01-01';
+
+511. Game Play Analysis I
+-- min(date)
+# Write your MySQL query statement below
+select player_id, min(event_date) as first_login
+from Activity
+group by player_id;
