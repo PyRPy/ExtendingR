@@ -126,3 +126,16 @@ having max(s.sale_date) <= '2019-03-31' and min(s.sale_date) >= '2019-01-01';
 select player_id, min(event_date) as first_login
 from Activity
 group by player_id;
+
+1141. User Activity for the Past 30 Days I
+-- again datediff, past or ahead
+SELECTactivity_date ASday, COUNT(DISTINCT user_id) ASactive_users 
+FROMActivity
+WHEREDATEDIFF("2019-07-27", activity_date) <30
+GROUP BYactivity_date
+
+# Write your MySQL query statement below
+select activity_date as day, count(distinct user_id) as active_users
+from Activity
+where datediff('2019-07-27', activity_date) < 30 and activity_date <='2019-07-27'
+group by activity_date;
