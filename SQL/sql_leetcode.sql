@@ -171,3 +171,26 @@ select u.name, ifnull(r.distance,0) as travelled_distance
 from Users as u left join (select user_id, sum(distance) as distance from Rides group by user_id ) as r
 on u.id = r.user_id
 order by r.distance desc, u.name asc;
+
+1581. Customer Who Visited but Did Not Make Any Transactions
+SELECTcustomer_id, COUNT(*) ascount_no_trans
+FROM Visits
+WHEREvisit_id NOT IN(SELECT DISTINCTvisit_id FROMTransactions)
+GROUP BYcustomer_id;
+
+
+select v.customer_id, count(*) as count_no_trans
+from Visits as v
+where v.visit_id not in
+(select distinct visit_id from Transactions)
+group by v.customer_id;
+
+1587. Bank Account Summary II
+Write an SQL query to report the name and balance of users with a 
+balance higher than 10000. The balance of an account is equal to the 
+sum of the amounts of all transactions involving that account.
+
+select name, sum(t.amount) as balance
+from users as u join Transactions as t on u.account = t.account
+group by t.account
+having balance > 10000;
