@@ -194,3 +194,20 @@ select name, sum(t.amount) as balance
 from users as u join Transactions as t on u.account = t.account
 group by t.account
 having balance > 10000;
+
+1667. Fix Names in a Table
+Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase.
+selectCONCAT(UCASE(LEFT('CHRIS', 1)),SUBSTRING(lower('CHRIS'),2));
+
+# Write your MySQL query statement below
+select user_id, concat(upper(left(name, 1)), substring(lower(name), 2)) as name
+from Users
+order by user_id;
+
+1693. Daily Leads and Partners
+Write an SQL query that will, for each date_id and make_name, return the number of distinct lead_id's and distinct partner_id's.
+
+# Write your MySQL query statement below
+select date_id, make_name, count(distinct lead_id) as unique_leads, count(distinct partner_id) as unique_partners
+from DailySales
+group by make_name, date_id
