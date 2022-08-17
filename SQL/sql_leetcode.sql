@@ -211,3 +211,17 @@ Write an SQL query that will, for each date_id and make_name, return the number 
 select date_id, make_name, count(distinct lead_id) as unique_leads, count(distinct partner_id) as unique_partners
 from DailySales
 group by make_name, date_id
+
+1729. Find Followers Count
+Write an SQL query that will, for each user, return the number of followers.
+Return the result table ordered by user_id.
+select user_id, count(follower_id) as followers_count
+from Followers
+group by user_id
+order by user_id;
+
+1741. Find Total Time Spent by Each Employee
+select event_day as day, emp_id, sum(out_time - in_time) as total_time
+from Employees
+group by event_day, emp_id;
+
