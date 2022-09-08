@@ -230,3 +230,29 @@ group by event_day, emp_id;
 select product_id
 from Products
 where low_fats = "Y" and recyclable = "Y";
+
+1965. Employees With Missing Information
+Write an SQL query to report the IDs of all the employees with missing information.
+select employee_id 
+from Employees 
+where employee_id not in (select employee_id from Salaries)
+union
+select employee_id
+from Salaries
+where employee_id not in (select employee_id from Employees)
+order by employee_id
+;
+
+1890. The Latest Login in 2020
+# Write your MySQL query statement below
+select distinct user_id, max(time_stamp) as last_stamp
+from Logins
+group by user_id, time_stamp
+having extract(year from time_stamp) = 2020
+;
+
+select distinct user_id, max(time_stamp) as last_stamp
+from Logins
+where year(time_stamp) = 2020
+group by user_id
+;
